@@ -1,0 +1,20 @@
+/* PortfolioAllocationChart.css */
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chart-legend {
+    flex: 1;
+    padding: 10px;
+    background-color: #f2f2f2;
+  }
+  
+  .chart {
+    flex: 3;
+    padding: 10px;
+    background-color: #fff;
+  }
+  

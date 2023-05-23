@@ -108,6 +108,7 @@ export default async function Home() {
       <InputForm />
       {/* We can then pass the props { symbol, allocation, date_from, date_to, initialBalance } to the APIComponent here */}
       <APIComponent />
+      <TradingDataTable tradingData={tradingData} userInputData={userInputData} />
     </main>
   )
 }
