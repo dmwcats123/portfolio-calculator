@@ -1,0 +1,67 @@
+.trading-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f8f8f8;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .trading-table th,
+  .trading-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .trading-table th {
+    background-color: #2d9cdb;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .trading-table tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+  
+  .trading-table .date-column {
+    min-width: 120px;
+  }
+  
+  .trading-table .value-column,
+  .trading-table .profit-column {
+    min-width: 100px;
+    text-align: right;
+  }
+  
+  .trading-table .allocation-column {
+    min-width: 80px;
+  }
+  
+  .trading-table .stock-column {
+    min-width: 120px;
+    text-align: right;
+  }
+  
+  .trading-table .header-row th,
+  .trading-table .header-row td {
+    font-size: 14px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #555;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  
+  .trading-table .data-row td {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .trading-table .data-row .positive-profit {
+    color: green;
+  }
+  
+  .trading-table .data-row .negative-profit {
+    color: red;
+  }
+  
