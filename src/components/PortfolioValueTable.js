@@ -27,7 +27,7 @@ const PortfolioValueTable = (props) => {
 
   return (
     <div className="portfolio-value-table-container">
-      <h2>Portfolio Value</h2>
+      <h2 className="portfolio-value-table-title">Portfolio Value</h2>
       <table className="portfolio-value-table">
         <thead>
           <tr>
