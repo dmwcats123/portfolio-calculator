@@ -51,7 +51,7 @@ export default async function handler(req, res) {
   let method = req.method;
   let body = JSON.parse(req.body);
   if (method === 'POST') {
-    const data = getDates(body.symbol, body.date_from, body.date_to, body.allocation, body.initialBalance)
+    getDates(body.symbol, body.date_from, body.date_to, body.allocation, body.initialBalance)
     .then((data) => {
       res.status(200).json(data);
     })
