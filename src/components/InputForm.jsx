@@ -15,6 +15,7 @@ const InputForm = () => {
     const [toDate, setToDate] = useState(new Date());
     const [inputError, setInputError] = useState("");
     const [symbolSearch, setSymbolSearch] = useState("");
+    const [ marketStackResponeData, setMarketStackResponseData ] = useState({});
 
     useEffect(() => {
         fetchSymbols();
@@ -24,9 +25,9 @@ const InputForm = () => {
               setFilteredSymbols([]);
             }
           };
-      
+
           document.addEventListener('keydown', handleKeyDown);
-      
+
           return () => {
             document.removeEventListener('keydown', handleKeyDown);
           };
@@ -39,8 +40,20 @@ const InputForm = () => {
         .catch(error => console.error('Error:', error));
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event, symbol, date_from, date_to, allocation, initialBalance) => {
         event.preventDefault();
+        symbol = symbol || 'AAPL,GOOGL';
+        date_from = date_from || '2023-01-25';
+        date_to = date_to || '2023-01-31';
+        allocation = allocation || [0.5, 0.5];
+        initialBalance = initialBalance || 2000;
+        const data = { symbol, date_from, date_to, allocation, initialBalance}
+        let marketStackData = await fetch('/api', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+        marketStackData = await marketStackData.json();
+        setMarketStackResponseData(JSON.stringify(marketStackData));
     }
 
     const handleSymbolChange = (symbol) => {
@@ -109,6 +122,10 @@ const InputForm = () => {
         setCurrPercentage("");
         setSymbolSearch("");
     }
+
+   useEffect(() => {
+     console.log('marketStackResponeData', marketStackResponeData);
+   }, [marketStackResponeData]);
 
     return(
         <div className = "flex flex-row w-full justify-center">
