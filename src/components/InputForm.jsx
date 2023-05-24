@@ -44,7 +44,7 @@ const InputForm = () => {
         date_from = date_from || '2023-01-25';
         date_to = date_to || '2023-01-31';
         allocation = allocation || [0.5, 0.5];
-        initialBalance = 2000;
+        initialBalance = initialBalance || 2000;
         const data = { symbol, date_from, date_to, allocation, initialBalance}
         let marketStackData = await fetch('/api', {
             method: 'POST',
@@ -52,7 +52,6 @@ const InputForm = () => {
         });
         marketStackData = await marketStackData.json();
         setMarketStackResponseData(JSON.stringify(marketStackData));
-        // console.log('marketStackData', marketStackData);
     }
 
     const handleSymbolChange = (symbol) => {
@@ -119,7 +118,9 @@ const InputForm = () => {
         setSymbolSearch("");
     }
 
-
+   useEffect(() => {
+     console.log('marketStackResponeData', marketStackResponeData);
+   }, [marketStackResponeData]);
 
     return(
         <form className = "flex flex-row bg-offWhite shadow-lg rounded px-8 pt-6 pb-8 mb-4 w-1/2" onSubmit={handleSubmit}>
