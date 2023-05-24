@@ -1,6 +1,6 @@
+'use client';
 import React from "react";
-import PortfolioAllocationTable from "./PortfolioAllocationTable";
-// import PortfolioAllocationChartWithLegend from "./PortfolioAllocationChartWithLegend";
+import PortfolioAllocationChartWithLegend from "./PortfolioAllocationChartWithLegend";
 import PortfolioValueTable from "./PortfolioValueTable";
 import "../styles/TradingDataTable.css"; // Import the CSS file for styling
 
@@ -97,8 +97,7 @@ const TradingDataTable = (props) => {
 
   return (
     <div>
-    <PortfolioAllocationTable portfolioAllocation={result.portfolioAllocation} />
-      {/* <PortfolioAllocationChartWithLegend portfolioAllocation={result.portfolioAllocation} /> */}
+      <PortfolioAllocationChartWithLegend portfolioAllocation={result.portfolioAllocation} />
       <PortfolioValueTable portfolioValuePerDay={result.portfolioValuePerDay} />
     </div>
   );
