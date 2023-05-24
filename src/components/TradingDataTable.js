@@ -101,10 +101,10 @@ const TradingDataTable = (props) => {
   return (
     <div>
       <PortfolioAllocationChartWithLegend userInputData={userInputData} />
-      {/* <StockPriceCandlestickChart tradingData = {tradingData.data}/> */}
-      <PortfolioValueTable portfolioValuePerDay={result.portfolioValuePerDay} />
+      <StockPriceCandlestickChart tradingData = {tradingData.data}/>
+      <PortfolioValueTable portfolioValuePerDay={result.portfolioValuePerDay} initialBalance={initialBalance}/>
       <PortfolioValueLineChart portfolioValuePerDay={result.portfolioValuePerDay} />
-      {/* <PortfolioValueStackedBarChart portfolioValuePerDay={result.portfolioValuePerDay} /> */}
+      <PortfolioValueStackedBarChart portfolioValuePerDay={result.portfolioValuePerDay} />
     </div>
   );
 };

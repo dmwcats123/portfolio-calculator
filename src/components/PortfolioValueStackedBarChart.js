@@ -1,38 +1,62 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import randomColor from 'randomcolor';
+import ReactApexChart from 'react-apexcharts';
+import "../styles/PortfolioValueStackedBarChart.css"; 
 
 const PortfolioValueStackedBarChart = ({ portfolioValuePerDay }) => {
-  const data = portfolioValuePerDay.map(({ date, stocks }) => ({
-    date,
-    ...stocks,
-  }));
+  // Prepare data for the StackedBarChart
+  const chartData = {
+    categories: [], // Array to store the dates
+    series: [], // Array to store the series data
+  };
 
-  const colors = generateColors(Object.keys(data[0]).filter((key) => key !== 'date').length);
+  // Loop through the portfolioValuePerDay data
+  portfolioValuePerDay.forEach((item) => {
+    const { date, stocks } = item;
+
+    // Add the date to the categories array
+    chartData.categories.push(date);
+
+    // Loop through each stock in the stocks object
+    Object.keys(stocks).forEach((stock) => {
+      // Check if the series for the stock already exists, if not create it
+      const existingSeries = chartData.series.find((series) => series.name === stock);
+      if (existingSeries) {
+        // Add the value for the stock on the specific date
+        existingSeries.data.push(stocks[stock]);
+      } else {
+        // Create a new series for the stock and add the value for the specific date
+        chartData.series.push({
+          name: stock,
+          data: [stocks[stock]],
+        });
+      }
+    });
+  });
+
+  // Configure the options for the StackedBarChart
+  const options = {
+    chart: {
+      stacked: true,
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    xaxis: {
+      categories: chartData.categories,
+    },
+    legend: {
+      position: 'top',
+    },
+  };
 
   return (
-    <BarChart width={600} height={300} data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="date" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      {Object.keys(data[0])
-        .filter((key) => key !== 'date')
-        .map((company, index) => (
-          <Bar key={company} dataKey={company} stackId="portfolio" fill={colors[index]} />
-        ))}
-    </BarChart>
+    <div>
+    <h2 className="chart-title">Stock Price Candlestick Chart</h2>
+      <ReactApexChart options={options} series={chartData.series} type="bar" height={350} />
+    </div>
   );
-};
-
-// Function to generate vibrant colors
-const generateColors = (count) => {
-  return randomColor({
-    count: count,
-    luminosity: 'bright',
-    format: 'rgbc',
-  });
 };
 
 export default PortfolioValueStackedBarChart;

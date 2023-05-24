@@ -1,0 +1,9 @@
+.chart-container {
+    position: relative;
+  }
+  .chart-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }

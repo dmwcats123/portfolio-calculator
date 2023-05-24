@@ -1,0 +1,39 @@
+.chart-container {
+    position: relative;
+  }
+  .chart-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .note-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .note-description {
+    font-style: italic;
+  }
+  
+  .note-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .note-line {
+    margin-bottom: 5px;
+  }
+  
+  .green-candle {
+    color: green;
+  }
+  
+  .red-candle {
+    color: red;
+  }
+  

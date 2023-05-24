@@ -2,8 +2,7 @@ import React from "react";
 import "../styles/PortfolioValueTable.css"; 
 
 const PortfolioValueTable = (props) => {
-  const { portfolioValuePerDay } = props;
-  const initialBalance = 32500; // Update this with the actual initial balance
+  const { portfolioValuePerDay, initialBalance } = props;
 
   const getProfitColor = (profit) => {
     if (profit < 0) {
