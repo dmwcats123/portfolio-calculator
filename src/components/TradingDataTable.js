@@ -97,7 +97,7 @@ const TradingDataTable = (props) => {
 
   return (
     <div>
-      <PortfolioAllocationChartWithLegend portfolioAllocation={result.portfolioAllocation} />
+      <PortfolioAllocationChartWithLegend userInputData={userInputData} />
       <PortfolioValueTable portfolioValuePerDay={result.portfolioValuePerDay} />
     </div>
   );
