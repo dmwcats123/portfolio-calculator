@@ -1,40 +1,41 @@
 import React from 'react';
-import { PieChart } from 'react-minimal-pie-chart';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import randomColor from 'randomcolor';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PortfolioAllocationPieChart = (props) => {
-  const { portfolioAllocation } = props;
-  const data = Object.entries(portfolioAllocation).map(([company, allocation]) => ({
-    title: company,
-    value: parseFloat(allocation),
-  }));
+const PortfolioAllocationPieChart = ({ portfolioAllocation }) => {
+  const labels = Object.keys(portfolioAllocation);
+  const dataset = labels.map(stock => portfolioAllocation[stock].stockSpent);
+  const colors = generateColors(labels.length);
 
-  const colors = ['#8884d8', '#82ca9d', '#ffc658'];
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Balance spent ($)',
+        data: dataset,
+        backgroundColor: colors,
+        borderColor: 'black',
+        borderWidth: 1
+      },
+    ],
+  };
 
   return (
-    <div>
-      <h2>Portfolio Allocation</h2>
-      <PieChart
-        data={data}
-        radius={40}
-        lineWidth={60}
-        paddingAngle={5}
-        startAngle={-90}
-        viewBoxSize={[200, 200]}
-      >
-        {data.map((entry, index) => (
-          <Pie
-            key={entry.title}
-            data={entry.value}
-            cx={50}
-            cy={50}
-            startAngle={-90}
-            endAngle={90}
-            fill={colors[index % colors.length]}
-          />
-        ))}
-      </PieChart>
+    <div style={{ width: '25%', height: '25%' }}>
+      <Pie data={data} />
     </div>
   );
+};
+
+// Function to generate vibrant colors
+const generateColors = (count) => {
+  return randomColor({
+    count: count,
+    luminosity: 'bright',
+    format: 'rgba',
+  });
 };
 
 export default PortfolioAllocationPieChart;
