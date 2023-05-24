@@ -6,6 +6,9 @@ import "../styles/TradingDataTable.css"; // Import the CSS file for styling
 import PortfolioValueLineChart from "./PortfolioValueLineChart";
 import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
 import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
+import CompanyProfitsBarChart from "./CompanyProfitsBarChart"
+import CorrelationHeatmap from "./CorrelationHeatmap"
+import CumulativeProfitsAreaChart from "./CumulativeProfitsAreaChart"
 
 const TradingDataTable = (props) => {
   const { tradingData, userInputData } = props;
@@ -105,6 +108,9 @@ const TradingDataTable = (props) => {
       <PortfolioValueTable portfolioValuePerDay={result.portfolioValuePerDay} initialBalance={initialBalance}/>
       <PortfolioValueLineChart portfolioValuePerDay={result.portfolioValuePerDay} />
       <PortfolioValueStackedBarChart portfolioValuePerDay={result.portfolioValuePerDay} />
+      <CompanyProfitsBarChart portfolioValuePerDay={result.portfolioValuePerDay} />
+      {/* <PortfolioValueStackedBarChart portfolioValuePerDay={result.portfolioValuePerDay} /> */}
+      {/* <PortfolioValueStackedBarChart portfolioValuePerDay={result.portfolioValuePerDay} /> */}
     </div>
   );
 };

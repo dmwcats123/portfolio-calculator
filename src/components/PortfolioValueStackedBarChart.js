@@ -53,7 +53,7 @@ const PortfolioValueStackedBarChart = ({ portfolioValuePerDay }) => {
 
   return (
     <div>
-    <h2 className="chart-title">Stock Price Candlestick Chart</h2>
+    <h2 className="chart-title">Portfolio Value per Day Stacked Bar Chart</h2>
       <ReactApexChart options={options} series={chartData.series} type="bar" height={350} />
     </div>
   );
