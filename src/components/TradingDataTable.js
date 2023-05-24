@@ -3,6 +3,9 @@ import React from "react";
 import PortfolioAllocationChartWithLegend from "./PortfolioAllocationChartWithLegend";
 import PortfolioValueTable from "./PortfolioValueTable";
 import "../styles/TradingDataTable.css"; // Import the CSS file for styling
+import PortfolioValueLineChart from "./PortfolioValueLineChart";
+import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
+import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
 
 const TradingDataTable = (props) => {
   const { tradingData, userInputData } = props;
@@ -98,7 +101,10 @@ const TradingDataTable = (props) => {
   return (
     <div>
       <PortfolioAllocationChartWithLegend userInputData={userInputData} />
+      {/* <StockPriceCandlestickChart tradingData = {tradingData.data}/> */}
       <PortfolioValueTable portfolioValuePerDay={result.portfolioValuePerDay} />
+      <PortfolioValueLineChart portfolioValuePerDay={result.portfolioValuePerDay} />
+      {/* <PortfolioValueStackedBarChart portfolioValuePerDay={result.portfolioValuePerDay} /> */}
     </div>
   );
 };

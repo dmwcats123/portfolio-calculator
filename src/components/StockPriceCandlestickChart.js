@@ -1,34 +1,35 @@
-import React from 'react';
-import { CartesianGrid, XAxis, YAxis, Tooltip, Candlestick, LineChart, Line } from 'recharts';
+import React from "react";
+import { CartesianGrid, Legend, Tooltip, XAxis, YAxis, CandlestickChart, Candle } from 'recharts';
 
-const StockPriceCandlestickChart = ({ stockPrices }) => {
-  const data = Object.entries(stockPrices).map(([company, prices]) =>
-    Object.entries(prices).map(([date, { open, high, low, close }]) => ({
-      company,
-      date,
-      open,
-      high,
-      low,
-      close,
-    }))
-  ).flat();
+const StockPriceCandlestickChart = ({ tradingData }) => {
+  const stockData = [];
+
+  Object.keys(tradingData).forEach((stock) => {
+    const stockDates = Object.keys(tradingData[stock]);
+
+    stockDates.forEach((date) => {
+      const { open, high, low, close } = tradingData[stock][date];
+
+      stockData.push({
+        stock,
+        date,
+        open,
+        high,
+        low,
+        close,
+      });
+    });
+  });
 
   return (
-    <LineChart width={600} height={300} data={data}>
+    <CandlestickChart width={600} height={300} data={stockData}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="date" />
       <YAxis />
       <Tooltip />
-      {Object.keys(stockPrices).map((company, index) => (
-        <Candlestick
-          key={company}
-          dataKey="open"
-          data={data.filter((entry) => entry.company === company)}
-          name={`Stock Prices - ${company}`}
-          fill={`#${(index + 2) * 333}`}
-        />
-      ))}
-    </LineChart>
+      <Legend />
+      <Candle dataKey="close" fill="#8884d8" />
+    </CandlestickChart>
   );
 };
 
