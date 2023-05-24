@@ -1,4 +1,4 @@
-async function getDates(symbol, date_from, date_to, allocation, initialBalance) {
+async function getDates(symbol = 'AAPL,GOOGL', date_from = '2023-01-25', date_to = '2023-01-31', allocation = [0.5, 0.5], initialBalance = 1000) {
   const key = process.env.MARKETSTACK_API_KEY;
   let url = `http://api.marketstack.com/v1/eod?access_key=${key}&symbols=${symbol}&date_from=${date_from}&date_to=${date_to}`
   const res = await fetch(url, {
@@ -47,18 +47,16 @@ async function getDates(symbol, date_from, date_to, allocation, initialBalance) 
   return finalData;
 }
 
-export default async function APIComponent({ symbol = 'AAPL,GOOGL', date_from = '2023-01-25', date_to = '2023-01-31', allocation = [0.5, 0.5], initialBalance = 1000 }) {
-  const data = await getDates(symbol, date_from, date_to, allocation, initialBalance);
-  // object with keys {open, high, low, close, volume, adj_high, adj_low, adj_close, adj_open, adj_volume, split_factor, dividend, symbol, exchange, date})
-
-  return (
-    <main>
-      <h1>This is the component for getting the data</h1>
-      <p>Most likely the data visualization stuff will go here</p>
-      <div>SYMBOL, OPEN PRICE, DATE</div>
-      {/* {data?.data.map((data, index) => (
-        <div key={index}>{data.symbol} + {data.open} + {data.date} </div>
-      ))} */}
-    </main>
-  )
+export default async function handler(req, res) {
+  let method = req.method;
+  let body = JSON.parse(req.body);
+  if (method === 'POST') {
+    const data = getDates(body.symbol, body.date_from, body.date_to, body.allocation, body.initialBalance)
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+  }
 }

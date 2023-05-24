@@ -13,6 +13,7 @@ const InputForm = () => {
     const [toDate, setToDate] = useState("");
     const [inputError, setInputError] = useState("");
     const [symbolSearch, setSymbolSearch] = useState("");
+    const [ marketStackResponeData, setMarketStackResponseData ] = useState({});
 
     useEffect(() => {
         fetchSymbols();
@@ -22,9 +23,9 @@ const InputForm = () => {
               setFilteredSymbols([]);
             }
           };
-      
+
           document.addEventListener('keydown', handleKeyDown);
-      
+
           return () => {
             document.removeEventListener('keydown', handleKeyDown);
           };
@@ -37,8 +38,21 @@ const InputForm = () => {
         .catch(error => console.error('Error:', error));
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event, symbol, date_from, date_to, allocation, initialBalance) => {
         event.preventDefault();
+        symbol = symbol || 'AAPL,GOOGL';
+        date_from = date_from || '2023-01-25';
+        date_to = date_to || '2023-01-31';
+        allocation = allocation || [0.5, 0.5];
+        initialBalance = 2000;
+        const data = { symbol, date_from, date_to, allocation, initialBalance}
+        let marketStackData = await fetch('/api', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+        marketStackData = await marketStackData.json();
+        setMarketStackResponseData(JSON.stringify(marketStackData));
+        // console.log('marketStackData', marketStackData);
     }
 
     const handleSymbolChange = (symbol) => {
@@ -142,7 +156,7 @@ const InputForm = () => {
                 <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "End Date" type = "text" name = "date" value = {toDate} onChange={handleToDateChange}/>
                 </label>
                 <div className ="flex justify-end w-1/2"><button className = "block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-auto" type = "submit">Submit</button></div>
-                
+
                 {inputError && (
                 <div className ="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{inputError}</div>
                 )}
