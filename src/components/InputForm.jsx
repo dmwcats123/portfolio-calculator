@@ -1,6 +1,8 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from "react";
+import Datepicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css"
 
 const InputForm = () => {
     const [stockAllocations, setStockAllocations] = useState({});
@@ -9,8 +11,8 @@ const InputForm = () => {
     const [filteredSymbols, setFilteredSymbols] = useState([]);
     const [currPercentage, setCurrPercentage] = useState("");
     const [initialBalance, setInitialBalance] = useState(0);
-    const [fromDate, setFromDate] = useState("");
-    const [toDate, setToDate] = useState("");
+    const [fromDate, setFromDate] = useState(new Date());
+    const [toDate, setToDate] = useState(new Date());
     const [inputError, setInputError] = useState("");
     const [symbolSearch, setSymbolSearch] = useState("");
 
@@ -57,12 +59,12 @@ const InputForm = () => {
         setInitialBalance(event.target.value);
     }
 
-    const handleFromDateChange = (event) => {
-        setFromDate(event.target.value);
+    const handleFromDateChange = (date) => {
+        setFromDate(date);
     }
 
-    const handleToDateChange = (event) => {
-        setToDate(event.target.value);
+    const handleToDateChange = (date) => {
+        setToDate(date);
     }
 
     const handleSearchChange = (event) => {
@@ -80,6 +82,14 @@ const InputForm = () => {
     }
 
     const addStock = () => {
+        if (!symbols.includes(currSymbol)) {
+            setInputError("Only symbols which appear in the dropdown menu are valid.")
+            return;
+        }
+        if (currPercentage == "") {
+            setInputError("Percentage can not be blank.")
+            return;
+        }
         const allocationValues = Object.values(stockAllocations)
         let totalAllocation = 0;
         for (let i = 0; i < allocationValues.length; i++) {
@@ -90,12 +100,7 @@ const InputForm = () => {
             setInputError("Total Stock Allocation Should Not Exceed 100%.")
             return;
         }
-        if (currPercentage == "") {
-            setInputError("Percentage can not be blank.")
-        }
-        if (!symbols.includes(currSymbol)) {
-            setInputError("Only symbols which appear in the dropdown menu are valid.")
-        }
+
         setStockAllocations(prevData => ({
             ...prevData,
             [currSymbol]: currPercentage
@@ -105,9 +110,8 @@ const InputForm = () => {
         setSymbolSearch("");
     }
 
-
-
     return(
+        <div className = "flex flex-row w-full justify-center">
         <form className = "flex flex-row bg-offWhite shadow-lg rounded px-8 pt-6 pb-8 mb-4 w-1/2" onSubmit={handleSubmit}>
             <div className = "flex flex-col w-full">
             <div className = "w-1/2">
@@ -119,7 +123,7 @@ const InputForm = () => {
                     className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full"
                 />
                 {filteredSymbols.length > 0 && (
-                    <ul  >
+                    <ul>
                     {filteredSymbols.map((symbol) => (
                         <li className="text-gray-700 block px-4 py-2 text-sm hover:bg-sky-200 cursor-pointer" key={symbol} onClick={() => handleSymbolChange(symbol)}>
                         {symbol}
@@ -136,13 +140,12 @@ const InputForm = () => {
                 <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "Initial Balance" type = "text" name = "initial balance" value = {initialBalance ? initialBalance : ""} onChange={handleBalanceChange}/>
                 </label>
                 <label className = "w-1/2">
-                    <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "Start Date" type = "text" name = "date" value = {fromDate} onChange={handleFromDateChange}/>
+                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd"  minDate = {new Date("2022/05/26")} placeholderText = "Start Date" selected = {fromDate} onChange={handleFromDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
                 </label>
                 <label className = "w-1/2">
-                <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "End Date" type = "text" name = "date" value = {toDate} onChange={handleToDateChange}/>
+                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd" maxDate = {new Date()}placeholderText = "End Date (Optional)" selected = {toDate} onChange={handleToDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
                 </label>
                 <div className ="flex justify-end w-1/2"><button className = "block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-auto" type = "submit">Submit</button></div>
-                
                 {inputError && (
                 <div className ="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{inputError}</div>
                 )}
@@ -154,6 +157,7 @@ const InputForm = () => {
                 ))}
             </div>
         </form>
+        </div>
     );
 };
 
