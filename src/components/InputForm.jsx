@@ -16,6 +16,18 @@ const InputForm = () => {
 
     useEffect(() => {
         fetchSymbols();
+
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+              setFilteredSymbols([]);
+            }
+          };
+      
+          document.addEventListener('keydown', handleKeyDown);
+      
+          return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+          };
     }, []);
 
     const fetchSymbols = async () => {
@@ -70,15 +82,19 @@ const InputForm = () => {
     const addStock = () => {
         const allocationValues = Object.values(stockAllocations)
         let totalAllocation = 0;
-        console.log(allocationValues);
         for (let i = 0; i < allocationValues.length; i++) {
             totalAllocation += parseFloat(allocationValues[i]);
         }
         totalAllocation += parseFloat(currPercentage);
-        console.log(totalAllocation);
         if(totalAllocation > 100) {
             setInputError("Total Stock Allocation Should Not Exceed 100%.")
             return;
+        }
+        if (currPercentage == "") {
+            setInputError("Percentage can not be blank.")
+        }
+        if (!symbols.includes(currSymbol)) {
+            setInputError("Only symbols which appear in the dropdown menu are valid.")
         }
         setStockAllocations(prevData => ({
             ...prevData,
@@ -112,28 +128,6 @@ const InputForm = () => {
                     </ul>
                 )}
             </div>
-               {/* <label className = "w-1/2">
-                <input
-                className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full"
-                type="text"
-                value={symbolSearch}
-                onChange={handleSearchChange}
-                placeholder="Search symbols..."
-                />
-                <select
-                className="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full"
-                name="symbol"
-                value={currSymbol}
-                onChange={handleSymbolChange}
-                >
-                    <option value="">Select a symbol</option>
-                    {symbols.map((symbol) => (
-                        <option key={symbol} value={symbol}>
-                        {symbol}
-                        </option>
-                    ))}
-                </select>            
-                </label> */}
                 <label className = "w-1/2">
                 <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "Percentage" type = "text" name = "percentage" value = {currPercentage} onChange={handlePercentageChange}/>
                 </label>
@@ -153,8 +147,9 @@ const InputForm = () => {
                 <div className ="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{inputError}</div>
                 )}
             </div>
-            <div className = "w-1/2">{
-                Object.entries(stockAllocations).map(([symbol, percentage]) => (
+            <div className = "w-1/2">
+            <h1>Current Allocation:</h1>
+                { Object.entries(stockAllocations).map(([symbol, percentage]) => (
                     <li>{symbol}: {percentage}%</li>
                 ))}
             </div>
