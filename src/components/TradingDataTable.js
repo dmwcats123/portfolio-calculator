@@ -103,12 +103,12 @@ const TradingDataTable = (props) => {
     }),
   };
 
-  
+
   return (
     <div>
       <Tabs selectedIndex={activeTab} onSelect={(index) => setActiveTab(index)}>
-      <TabList className="custom-tab-list"> 
-          <Tab className="custom-tab">Allocation Chart</Tab> 
+      <TabList className="custom-tab-list">
+          <Tab className="custom-tab">Allocation Chart</Tab>
           <Tab className="custom-tab">Candlestick Chart</Tab>
           <Tab className="custom-tab">Value Table</Tab>
           <Tab className="custom-tab">Value Line Chart</Tab>
