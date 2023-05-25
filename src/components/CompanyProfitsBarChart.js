@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import Chart from 'react-apexcharts';
 import "../styles/PortfolioValueTable.css";

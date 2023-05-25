@@ -1,4 +1,3 @@
-'use client';
 import React from "react";
 import PortfolioAllocationTable from "./PortfolioAllocationTable";
 import PortfolioAllocationPieChart from "./PortfolioAllocationPieChart";
