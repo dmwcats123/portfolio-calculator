@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartesianGrid, XAxis, YAxis, Tooltip, Heatmap, HeatmapSeries, HeatmapAxis } from 'recharts';
+import { CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
 const CorrelationHeatmap = ({ correlationData }) => {
   const data = Object.keys(correlationData).flatMap((company1, index1) =>
