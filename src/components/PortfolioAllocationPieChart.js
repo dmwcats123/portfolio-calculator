@@ -23,7 +23,7 @@ const PortfolioAllocationPieChart = ({ portfolioAllocation }) => {
   };
 
   return (
-    <div style={{ width: '25%', height: '25%' }}>
+    <div style={{ width: '30%', height: 'auto' }}>
       <Pie data={data} />
     </div>
   );

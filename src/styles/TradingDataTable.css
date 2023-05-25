@@ -1,3 +1,4 @@
+
 .trading-table {
     width: 100%;
     border-collapse: collapse;
@@ -65,3 +66,40 @@
     color: red;
   }
   
+/* MyComponent.css */
+
+.custom-tabs {
+  width: 100%;
+}
+
+.custom-tab-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #ccc;
+}
+
+.custom-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-tab:hover {
+  background-color: #ddd;
+}
+
+.custom-tab.react-tabs__tab--selected {
+  background-color: #fff;
+  border-bottom: 2px solid #333;
+}
+
+.custom-tab.react-tabs__tab--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
