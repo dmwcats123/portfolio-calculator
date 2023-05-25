@@ -1,5 +1,6 @@
+'use client';
 import React from "react";
-import "../styles/PortfolioValueTable.css"; 
+import "../styles/PortfolioValueTable.css";
 
 const PortfolioValueTable = (props) => {
   const { portfolioValuePerDay, initialBalance } = props;
