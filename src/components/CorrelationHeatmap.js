@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 

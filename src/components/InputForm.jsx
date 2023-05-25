@@ -31,14 +31,12 @@ const InputForm = () => {
               setFilteredSymbols([]);
             }
           };
-          if (typeof window !== 'undefined') {
-            // Code that relies on the window object goes here
-            document.addEventListener('keydown', handleKeyDown);
 
-            return () => {
-              document.removeEventListener('keydown', handleKeyDown);
-            };
-          }
+          document.addEventListener('keydown', handleKeyDown);
+
+          return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+          };
     }, []);
 
     const fetchSymbols = async () => {
