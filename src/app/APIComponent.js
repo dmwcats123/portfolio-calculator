@@ -5,7 +5,7 @@ async function getDates(symbol, date_from, date_to, allocation, initialBalance) 
     method: 'GET',
   })
   const data = await res.json();
-  let finalData = {};
+  let finalData = { data : {} };
   let symbolArray = symbol.split(',');
 
   const combinedObject = symbolArray.reduce((obj, key, index) => {
@@ -25,11 +25,11 @@ async function getDates(symbol, date_from, date_to, allocation, initialBalance) 
       close: (eachDataPoint.close * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
       volume: eachDataPoint.volume,
     }
-    if (finalData[symbol]) {
-      finalData[symbol][date] = formatedData;
+    if (finalData[data][symbol]) {
+      finalData[data][symbol][date] = formatedData;
     } else {
-      finalData[symbol] = {};
-      finalData[symbol][date] = formatedData;
+      finalData[data][symbol] = {};
+      finalData[data][symbol][date] = formatedData;
     }
   }
   return finalData;

@@ -8,7 +8,6 @@ import PortfolioValueLineChart from "./PortfolioValueLineChart";
 import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
 import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
 import CompanyProfitsBarChart from "./CompanyProfitsBarChart"
-import CorrelationHeatmap from "./CorrelationHeatmap"
 import CumulativeProfitsAreaChart from "./CumulativeProfitsAreaChart"
 
 const TradingDataTable = (props) => {
@@ -20,7 +19,6 @@ const TradingDataTable = (props) => {
   const portfolioAllocation = userInputData.portfolioAllocation; //AAPL: 0.2,   GOOG: 0.5,  MSFT: 0.3
 
   const portfolioValue = {};
-
   Object.keys(tradingData.data).forEach((stock) => {
     const stockData = tradingData.data[stock]; //AAPL, GOOG, MSFT
     const stockDates = Object.keys(stockData); //2019-02-01, 2019-01-31, 2019-01-30
@@ -28,9 +26,12 @@ const TradingDataTable = (props) => {
     stockDates.sort((a, b) => new Date(b) - new Date(a)); // Sort dates in descending order
 
     const defaultStartDate = stockDates[stockDates.length - 1]; // oldest date as the default start date
-
+    // console.log('right before line 32');
     stockDates.forEach((date) => {
+      // console.log('inside stockDates.forEach');
+      //console.log(date, startDate, endDate);
       if (date >= startDate && date <= endDate) {
+        // console.log('inside if statement');
         if (!portfolioValue[date]) {
           portfolioValue[date] = {
             total: 0,
@@ -47,6 +48,7 @@ const TradingDataTable = (props) => {
 
         portfolioValue[date].stocks[stock] = stockValue;
         portfolioValue[date].total += stockValue;
+        // console.log(portfolioValue[date].total)
 
         const initialStockPrice = !stockData[startDate]
           ? stockData[defaultStartDate].close // Use the default start date for initial stock price
@@ -103,12 +105,12 @@ const TradingDataTable = (props) => {
     }),
   };
 
-  
+
   return (
     <div>
       <Tabs selectedIndex={activeTab} onSelect={(index) => setActiveTab(index)}>
-      <TabList className="custom-tab-list"> 
-          <Tab className="custom-tab">Allocation Chart</Tab> 
+      <TabList className="custom-tab-list">
+          <Tab className="custom-tab">Allocation Chart</Tab>
           <Tab className="custom-tab">Candlestick Chart</Tab>
           <Tab className="custom-tab">Value Table</Tab>
           <Tab className="custom-tab">Value Line Chart</Tab>

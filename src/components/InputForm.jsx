@@ -19,8 +19,8 @@ const InputForm = () => {
     const [toDate, setToDate] = useState(null);
     const [inputError, setInputError] = useState("");
     const [symbolSearch, setSymbolSearch] = useState("");
-    const [marketStackResponseData, setMarketStackResponseData ] = useState(null);
-    const [inputData, setInputData] = useState (null);
+    const [marketStackResponseData, setMarketStackResponseData ] = useState(undefined);
+    const [inputData, setInputData] = useState (undefined);
 
     useEffect(() => {
         fetchSymbols();
@@ -63,7 +63,7 @@ const InputForm = () => {
             date_from = fromDate.toISOString().split("T")[0].toString() || '2023-05-23';
 
         }
-        
+
         let date_to = "";
         if(toDate) {
             date_to = toDate.toISOString().split("T")[0].toString() || '2023-05-24';
@@ -83,18 +83,19 @@ const InputForm = () => {
         }
         let allocation = allocationValues || [0.5, 0.5];
 
-        console.log(symbol);
-        console.log(date_from);
-        console.log(date_to);
-        console.log(allocation);
-        console.log(initialBalance);
+        // console.log(symbol);
+        // console.log(date_from);
+        // console.log(date_to);
+        // console.log(allocation);
+        // console.log(initialBalance);
         const data = { symbol, date_from, date_to, allocation, initialBalance}
         let marketStackData = await fetch('/api', {
             method: 'POST',
             body: JSON.stringify(data),
         });
         marketStackData = await marketStackData.json();
-        setMarketStackResponseData(JSON.stringify(marketStackData));
+        setMarketStackResponseData(marketStackData);
+        // setMarketStackResponseData({});
         fetchUserInputJson(date_from, date_to, initialBalance, stockAllocations);
     }
 
@@ -164,7 +165,7 @@ const InputForm = () => {
         setCurrPercentage("");
         setSymbolSearch("");
     }
-    
+
     const fetchUserInputJson = (startDate, endDate, initialBalance, portfolioAllocation) => {
         const inputDataObj = {
           startDate: startDate,
@@ -172,12 +173,12 @@ const InputForm = () => {
           initialBalance: initialBalance,
           portfolioAllocation: portfolioAllocation
         };
-        setInputData(JSON.stringify(inputDataObj));
+        setInputData(inputDataObj);
       };
-    
+
       useEffect(() => {
-        console.log('marketStackResponseData', marketStackResponseData);
-        console.log('input data', inputData);
+        // console.log('marketStackResponseData', marketStackResponseData);
+        // console.log('input data', inputData);
       }, [marketStackResponseData]);
 
     return(
@@ -230,8 +231,6 @@ const InputForm = () => {
             </div>
         </form>
         </div>
-        {marketStackResponseData && console.log(marketStackResponseData)}
-        {inputData && console.log(inputData)}
         {
             marketStackResponseData && inputData && <TradingDataTable tradingData={marketStackResponseData} userInputData={inputData} />
         }

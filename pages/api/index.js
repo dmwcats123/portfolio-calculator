@@ -5,7 +5,8 @@ async function getDates(symbol = 'AAPL,GOOGL', date_from = '2023-01-25', date_to
     method: 'GET',
   })
   const data = await res.json();
-  let finalData = {}
+  let finalData = {};
+  finalData['data'] = {};
   let symbolArray = symbol.split(',');
 
   const combinedObject = symbolArray.reduce((obj, key, index) => {
@@ -18,21 +19,20 @@ async function getDates(symbol = 'AAPL,GOOGL', date_from = '2023-01-25', date_to
     let symbol = eachDataPoint.symbol;
     let date = eachDataPoint.date.slice(0, 10);
     let formatedData = {
-        name: symbol,
-        high: (eachDataPoint.high * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
-        low: (eachDataPoint.low * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
-        open: (eachDataPoint.open * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
-        close: (eachDataPoint.close * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
-        volume: eachDataPoint.volume,
+      name: symbol,
+      open: (eachDataPoint.open * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
+      high: (eachDataPoint.high * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
+      low: (eachDataPoint.low * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
+      close: (eachDataPoint.close * initialBalance * combinedObject[symbol] / eachDataPoint.open).toFixed(2),
+      volume: eachDataPoint.volume,
     }
-    if (finalData[symbol]) {
-      finalData[symbol][date] = formatedData;
+    if (finalData['data'][symbol]) {
+      finalData['data'][symbol][date] = formatedData;
     } else {
-      finalData[symbol] = {};
-      finalData[symbol][date] = formatedData;
+      finalData['data'][symbol] = {};
+      finalData['data'][symbol][date] = formatedData;
     }
   }
-  // adding the allocation, initial balance, and finalBalance to the finalData object
   return finalData;
 }
 
