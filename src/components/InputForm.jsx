@@ -19,7 +19,6 @@ const InputForm = () => {
     const [inputError, setInputError] = useState("");
     const [symbolSearch, setSymbolSearch] = useState("");
     const [marketStackResponeData, setMarketStackResponseData ] = useState({});
-    const [todaysDate, setTodaysDate ] = useState(new Date());
 
 
     useEffect(() => {
