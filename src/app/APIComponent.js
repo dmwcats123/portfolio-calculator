@@ -5,9 +5,7 @@ async function getDates(symbol, date_from, date_to, allocation, initialBalance) 
     method: 'GET',
   })
   const data = await res.json();
-  let finalData = {
-    initialBalance: initialBalance,
-  };
+  let finalData = {};
   let symbolArray = symbol.split(',');
 
   const combinedObject = symbolArray.reduce((obj, key, index) => {
@@ -34,16 +32,6 @@ async function getDates(symbol, date_from, date_to, allocation, initialBalance) 
       finalData[symbol][date] = formatedData;
     }
   }
-  // adding the allocation, initial balance, and finalBalance to the finalData object
-  let portfolioAllocation = {};
-  for (let i = 0; i < allocation.length; i++) {
-    portfolioAllocation[symbolArray[i]] = {
-      allocation : allocation[i],
-      initialBalance : allocation[i] * initialBalance,
-      finalBalance : allocation[i] * initialBalance * (finalData[symbolArray[i]][date_to].close / finalData[symbolArray[i]][date_from].open).toFixed(2),
-    };
-  };
-  finalData["portfolioAllocation"] = portfolioAllocation;
   return finalData;
 }
 
