@@ -13,7 +13,7 @@ const InputForm = () => {
     const [currSymbol, setCurrSymbol] = useState("");
     const [symbols, setSymbols] = useState([]);
     const [filteredSymbols, setFilteredSymbols] = useState([]);
-    const [currPercentage, setCurrPercentage] = useState("");
+    const [currPercentage, setCurrPercentage] = useState(0);
     const [initialBalance, setInitialBalance] = useState(0);
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
@@ -21,6 +21,7 @@ const InputForm = () => {
     const [symbolSearch, setSymbolSearch] = useState("");
     const [marketStackResponseData, setMarketStackResponseData ] = useState(undefined);
     const [inputData, setInputData] = useState (undefined);
+    const [remainingAllocation, setRemainingAllocation] = useState(100);
 
     useEffect(() => {
         fetchSymbols();
@@ -47,6 +48,10 @@ const InputForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if(remainingAllocation){
+            setInputError("Total allocation needs to add up to 100%");
+            return;
+        }
         let symbolsString= Object.keys(stockAllocations).toString();
         let allocationValues = Object.values(stockAllocations);
         let symbol = symbolsString || 'AAPL,GOOGL';
@@ -83,11 +88,6 @@ const InputForm = () => {
         }
         let allocation = allocationValues || [0.5, 0.5];
 
-        // console.log(symbol);
-        // console.log(date_from);
-        // console.log(date_to);
-        // console.log(allocation);
-        // console.log(initialBalance);
         const data = { symbol, date_from, date_to, allocation, initialBalance}
         let marketStackData = await fetch('/api', {
             method: 'POST',
@@ -95,7 +95,6 @@ const InputForm = () => {
         });
         marketStackData = await marketStackData.json();
         setMarketStackResponseData(marketStackData);
-        // setMarketStackResponseData({});
         fetchUserInputJson(date_from, date_to, initialBalance, stockAllocations);
     }
 
@@ -146,20 +145,18 @@ const InputForm = () => {
             setInputError("Percentage can not be blank.")
             return;
         }
-        const allocationValues = Object.values(stockAllocations)
-        let totalAllocation = 0;
-        for (let i = 0; i < allocationValues.length; i++) {
-            totalAllocation += parseFloat(allocationValues[i]);
-        }
-        totalAllocation += parseFloat(currPercentage);
-        if(totalAllocation > 100) {
+
+
+        const nonStateRemainingAllocation = remainingAllocation- currPercentage;
+        if(nonStateRemainingAllocation < 0) {
             setInputError("Total Stock Allocation Should Not Exceed 100%.")
             return;
         }
+        setRemainingAllocation(nonStateRemainingAllocation);
 
         setStockAllocations(prevData => ({
             ...prevData,
-            [currSymbol]: parseFloat(currPercentage)/100
+            [currSymbol]: (parseFloat(currPercentage)/100).toFixed(2),
         }));
         setCurrSymbol("");
         setCurrPercentage("");
@@ -176,16 +173,25 @@ const InputForm = () => {
         setInputData(inputDataObj);
       };
 
-      useEffect(() => {
-        // console.log('marketStackResponseData', marketStackResponseData);
-        // console.log('input data', inputData);
-      }, [marketStackResponseData]);
+      const resetState = () => {
+        setStockAllocations({});
+        setCurrSymbol("");
+        setCurrPercentage(0);
+        setInitialBalance(0);
+        setFromDate(null);
+        setToDate(null);
+        setInputError(null);
+        setSymbolSearch("");
+        setInputData(undefined);
+        setMarketStackResponseData(undefined);
+        setRemainingAllocation(100);
+      }
 
     return(
         <div>
         <div className = "flex flex-row w-full justify-center">
         <form className = "flex flex-row bg-offWhite shadow-lg rounded px-8 pt-6 pb-8 mb-4 w-1/2" onSubmit={handleSubmit}>
-            <div className = "flex flex-col w-full">
+            <div className = "flex flex-col w-full h-full">
             <div className = "w-1/2">
                 <input
                     type="text"
@@ -205,7 +211,7 @@ const InputForm = () => {
                 )}
             </div>
                 <label className = "w-1/2">
-                <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "Percentage" type = "text" name = "percentage" value = {currPercentage} onChange={handlePercentageChange}/>
+                <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "Percentage" type = "text" name = "percentage" value = {currPercentage ? currPercentage : ""} onChange={handlePercentageChange}/>
                 </label>
                 <div className ="flex justify-end w-1/2"><button className = "block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-auto" type = "button" onClick = {addStock}>Add Stock To Portfolio</button></div>
                 <label className = "w-1/2">
@@ -222,12 +228,15 @@ const InputForm = () => {
                 <div className ="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">{inputError}</div>
                 )}
             </div>
-            <div className = "w-1/2">
-                <h1>Current Allocation:</h1>
+            <div className = "flex flex-col w-1/2 h-full">
+                <h1>Current Allocation</h1>
+                <h1>({remainingAllocation}% remaining):</h1>
+                <ul className = "flex-grow">
                 { Object.entries(stockAllocations).map(([symbol, percentage]) => (
                     <li key={symbol}>{symbol}: {percentage*100}%</li>
                 ))}
-
+                </ul>
+                <div className ="mt-auto w-full flex justify-end items-end"><button className = "block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-auto" type = "button" onClick ={resetState}>Reset</button></div>
             </div>
         </form>
         </div>
