@@ -106,7 +106,7 @@ export default async function Home() {
      <main>
       <h1 className="flex m-5 justify-center text-4xl font-bold">Portfolio Calculator</h1>
       <InputForm />
-      <TradingDataTable tradingData={tradingData} userInputData={userInputData} />
+      {/*       <TradingDataTable tradingData={tradingData} userInputData={userInputData} />*/}
     </main>
   )
 }

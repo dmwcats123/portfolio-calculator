@@ -111,7 +111,7 @@ const InputForm = () => {
 
     const handleBalanceChange = (event) => {
         verifyIntegerInput(event);
-        setInitialBalance(event.target.value);
+        setInitialBalance(parseFloat(event.target.value));
     }
 
     const handleFromDateChange = (date) => {
@@ -230,9 +230,10 @@ const InputForm = () => {
             </div>
         </form>
         </div>
-        {/*
+        {marketStackResponseData && console.log(marketStackResponseData)}
+        {inputData && console.log(inputData)}
+        {
             marketStackResponseData && inputData && <TradingDataTable tradingData={marketStackResponseData} userInputData={inputData} />
-            */
         }
         </div>
     );
