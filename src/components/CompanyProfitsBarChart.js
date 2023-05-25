@@ -1,60 +1,77 @@
 import React from 'react';
-import ReactApexChart from 'react-apexcharts';
-import "../styles/CompanyProfitsBarChart.css"; 
+import Chart from 'react-apexcharts';
+import "../styles/PortfolioValueTable.css"; 
 
 const CompanyProfitsBarChart = ({ portfolioValuePerDay }) => {
-  // Prepare data for the StackedBarChart
-  const chartData = {
-    categories: [], // Array to store the dates
-    series: [], // Array to store the series data
-  };
+  // Extracting the data for the chart
+  const rows = Object.keys(portfolioValuePerDay);
+  const dates = Object.values(portfolioValuePerDay).map((item) => item.date);
+  console.log(dates)
+  const companies = Object.keys(portfolioValuePerDay[rows[0]].profits);
+  const series = rows.map((rows) =>
+    companies.map((company) => portfolioValuePerDay[rows].profits[company])
+  );
 
-  // Loop through the portfolioValuePerDay data
-  portfolioValuePerDay.forEach((item) => {
-    const { date, profits } = item;
-
-    // Add the date to the categories array
-    chartData.categories.push(date);
-
-    // Loop through each stock in the profits object
-    Object.keys(profits).forEach((stock) => {
-      // Check if the series for the stock already exists, if not create it
-      const existingSeries = chartData.series.find((series) => series.name === stock);
-      if (existingSeries) {
-        // Add the profit for the stock on the specific date
-        existingSeries.data.push(profits[stock]);
-      } else {
-        // Create a new series for the stock and add the profit for the specific date
-        chartData.series.push({
-          name: stock,
-          data: [profits[stock]],
-        });
-      }
-    });
-  });
-
-  // Configure the options for the StackedBarChart
+  // Configuring the chart options
   const options = {
     chart: {
-      stacked: true,
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true,
+      type: 'bar',
+      stacked: false,
+      toolbar: {
+        show: false,
       },
     },
     xaxis: {
-      categories: chartData.categories,
+      categories: dates,
+      position: 'top',
+      axisTicks: {
+        show: false,
+      },
+      axisBorder: {
+        show: false,
+      },
+      crosshairs: {
+        show: false,
+      },
+      tooltip: {
+        enabled: false,
+      },
+    },
+    yaxis: {
+      title: {
+        text: 'Profit',
+      },
+      labels: {
+        formatter: (value) => value.toFixed(2),
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '40%',
+        startingShape: 'flat',
+        endingShape: 'flat',
+      },
     },
     legend: {
-      position: 'top',
+      position: 'right',
+      horizontalAlign: 'left',
     },
+    dataLabels: {
+      enabled: false,
+    },
+  };
+
+  // Setting the chart data
+  const chartData = {
+    options: options,
+    series: companies.map((company, index) => ({ name: company, data: series.map((data) => data[index]) })),
   };
 
   return (
     <div>
-      <h2 className="chart-title">Company Profits and Losses per Day</h2>
-      <ReactApexChart options={options} series={chartData.series} type="bar" height={350} />
+    <h2 className="portfolio-value-table-title">Profits and Losses per day </h2>
+      <Chart options={chartData.options} series={chartData.series} type="bar" height={300} />
     </div>
   );
 };
