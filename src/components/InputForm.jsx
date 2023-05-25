@@ -9,6 +9,8 @@ const InputForm = () => {
     const today = new Date();
     let yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
+    let oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear -1);
     const [stockAllocations, setStockAllocations] = useState({});
     const [currSymbol, setCurrSymbol] = useState("");
     const [symbols, setSymbols] = useState([]);
@@ -218,7 +220,7 @@ const InputForm = () => {
                 <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "Initial Balance" type = "text" name = "initial balance" value = {initialBalance ? initialBalance : ""} onChange={handleBalanceChange}/>
                 </label>
                 <label className = "w-1/2">
-                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd"  minDate = {new Date("2022/05/26")} maxDate = {yesterday} placeholderText = "Start Date" selected = {fromDate} onChange={handleFromDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
+                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd"  minDate = {oneYearAgo} maxDate = {yesterday} placeholderText = "Start Date" selected = {fromDate} onChange={handleFromDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
                 </label>
                 <label className = "w-1/2">
                     <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd" minDate = {new Date("2022/05/26")} maxDate = {yesterday} placeholderText = "End Date (Optional)" selected = {toDate} onChange={handleToDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
