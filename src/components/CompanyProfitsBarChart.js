@@ -1,12 +1,11 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import "../styles/PortfolioValueTable.css"; 
+import "../styles/PortfolioValueTable.css";
 
 const CompanyProfitsBarChart = ({ portfolioValuePerDay }) => {
   // Extracting the data for the chart
   const rows = Object.keys(portfolioValuePerDay);
   const dates = Object.values(portfolioValuePerDay).map((item) => item.date);
-  console.log(dates)
   const companies = Object.keys(portfolioValuePerDay[rows[0]].profits);
   const series = rows.map((rows) =>
     companies.map((company) => portfolioValuePerDay[rows].profits[company])
