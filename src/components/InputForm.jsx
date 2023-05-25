@@ -3,6 +3,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import Datepicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
+import PortfolioAllocationChartWithLegend from './PortfolioAllocationChartWithLegend';
 
 const InputForm = () => {
     const today = new Date();
@@ -19,8 +20,7 @@ const InputForm = () => {
     const [inputError, setInputError] = useState("");
     const [symbolSearch, setSymbolSearch] = useState("");
     const [marketStackResponeData, setMarketStackResponseData ] = useState({});
-    const [todaysDate, setTodaysDate ] = useState(new Date());
-
+    const [inputData, setInputData] = useState (null);
 
     useEffect(() => {
         fetchSymbols();
@@ -90,6 +90,8 @@ const InputForm = () => {
         });
         marketStackData = await marketStackData.json();
         setMarketStackResponseData(JSON.stringify(marketStackData));
+        fetchUserInputJson(date_from, date_to, initialBalance, stockAllocations);
+        console.log(inputData);
     }
 
     const handleSymbolChange = (symbol) => {
@@ -152,13 +154,23 @@ const InputForm = () => {
 
         setStockAllocations(prevData => ({
             ...prevData,
-            [currSymbol]: parseFloat(currPercentage)
+            [currSymbol]: parseFloat(currPercentage)/100
         }));
         setCurrSymbol("");
         setCurrPercentage("");
         setSymbolSearch("");
     }
-
+    
+    const fetchUserInputJson = (startDate, endDate, initialBalance, portfolioAllocation) => {
+        const inputDataObj = {
+          startDate: startDate,
+          endDate: endDate,
+          initialBalance: initialBalance,
+          portfolioAllocation: portfolioAllocation
+        };
+        setInputData(inputDataObj);
+      };
+      
    useEffect(() => {
      console.log('marketStackResponeData', marketStackResponeData);
    }, [marketStackResponeData]);
@@ -205,10 +217,11 @@ const InputForm = () => {
                 )}
             </div>
             <div className = "w-1/2">
-            <h1>Current Allocation:</h1>
+                <h1>Current Allocation:</h1>
                 { Object.entries(stockAllocations).map(([symbol, percentage]) => (
                     <li key={symbol}>{symbol}: {percentage}%</li>
                 ))}
+
             </div>
         </form>
         </div>
