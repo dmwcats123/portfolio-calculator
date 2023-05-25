@@ -3,7 +3,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import Datepicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
-import PortfolioAllocationChartWithLegend from './PortfolioAllocationChartWithLegend';
+import TradingDataTable from './TradingDataTable';
 
 const InputForm = () => {
     const today = new Date();
@@ -19,7 +19,7 @@ const InputForm = () => {
     const [toDate, setToDate] = useState(null);
     const [inputError, setInputError] = useState("");
     const [symbolSearch, setSymbolSearch] = useState("");
-    const [marketStackResponeData, setMarketStackResponseData ] = useState({});
+    const [marketStackResponseData, setMarketStackResponseData ] = useState(null);
     const [inputData, setInputData] = useState (null);
 
     useEffect(() => {
@@ -83,6 +83,11 @@ const InputForm = () => {
         }
         let allocation = allocationValues || [0.5, 0.5];
 
+        console.log(symbol);
+        console.log(date_from);
+        console.log(date_to);
+        console.log(allocation);
+        console.log(initialBalance);
         const data = { symbol, date_from, date_to, allocation, initialBalance}
         let marketStackData = await fetch('/api', {
             method: 'POST',
@@ -91,7 +96,6 @@ const InputForm = () => {
         marketStackData = await marketStackData.json();
         setMarketStackResponseData(JSON.stringify(marketStackData));
         fetchUserInputJson(date_from, date_to, initialBalance, stockAllocations);
-        console.log(inputData);
     }
 
     const handleSymbolChange = (symbol) => {
@@ -168,15 +172,16 @@ const InputForm = () => {
           initialBalance: initialBalance,
           portfolioAllocation: portfolioAllocation
         };
-        setInputData(inputDataObj);
+        setInputData(JSON.stringify(inputDataObj));
       };
-      
-   useEffect(() => {
-     console.log('marketStackResponeData', marketStackResponeData);
-   }, [marketStackResponeData]);
-
+    
+      useEffect(() => {
+        console.log('marketStackResponseData', marketStackResponseData);
+        console.log('input data', inputData);
+      }, [marketStackResponseData]);
 
     return(
+        <div>
         <div className = "flex flex-row w-full justify-center">
         <form className = "flex flex-row bg-offWhite shadow-lg rounded px-8 pt-6 pb-8 mb-4 w-1/2" onSubmit={handleSubmit}>
             <div className = "flex flex-col w-full">
@@ -219,11 +224,16 @@ const InputForm = () => {
             <div className = "w-1/2">
                 <h1>Current Allocation:</h1>
                 { Object.entries(stockAllocations).map(([symbol, percentage]) => (
-                    <li key={symbol}>{symbol}: {percentage}%</li>
+                    <li key={symbol}>{symbol}: {percentage*100}%</li>
                 ))}
 
             </div>
         </form>
+        </div>
+        {/*
+            marketStackResponseData && inputData && <TradingDataTable tradingData={marketStackResponseData} userInputData={inputData} />
+            */
+        }
         </div>
     );
 };
