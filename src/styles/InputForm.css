@@ -1,0 +1,140 @@
+.input-form-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .input-form-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .input-form {
+    display: flex;
+    flex-direction: row;
+    background-color: #f7fafc;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .input-form-column {
+    flex: 1;
+  }
+  
+  .input-field {
+    margin-bottom: 10px;
+  }
+  
+  .input-field label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .input-field-text {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #cbd5e0;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .symbol-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .symbol-list-item {
+    background-color: #f7fafc;
+    padding: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: #051a3b;
+    color: #ffffff;
+  }
+  
+  .btn-secondary {
+    background-color: #d2d6dc;
+    color: #4a5568;
+    margin-left: 10px;
+  }
+  
+  .input-form-note {
+    font-size: 12px;
+    margin-top: 5px;
+    color: #718096;
+  }
+  
+  .input-form-error {
+    background-color: #fed7d7;
+    border: 1px solid #e53e3e;
+    color: #e53e3e;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .current-allocation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .current-allocation h1,
+  .current-allocation h2 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .stock-allocations {
+    list-style-type: none;
+    padding: 0;
+    margin: 30px 0;
+  }
+  
+  .stock-allocations li {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #010713; 
+  font-style: italic;
+  }
+  
+  .input-field-datepicker {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #cbd5e0;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .input-form-heading {
+    color: #02132e;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-form-subheading {
+    color: #4a5568;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-style: italic; 
+  }  

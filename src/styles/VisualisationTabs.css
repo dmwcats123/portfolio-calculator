@@ -67,39 +67,40 @@
   }
   
 /* MyComponent.css */
-
-.custom-tabs {
-  width: 100%;
-}
-
 .custom-tab-list {
   display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  background-color: #f2f2f2;
-  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  justify-content: center; 
 }
 
 .custom-tab {
-  flex: 1;
-  text-align: center;
   padding: 10px 20px;
+  background-color: #051a3b;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: #ffffff; /* Tab text color */
+  font-weight: bold; /* Make the tab text bold */
+  text-align: center; /* Center align the tab text */
+}
+
+.custom-tab:first-child {
+  border-radius: 5px 0 0 0;
+}
+
+.custom-tab:last-child {
+  border-radius: 0 5px 0 0;
 }
 
 .custom-tab:hover {
-  background-color: #ddd;
+  background-color: #055159;
 }
 
-.custom-tab.react-tabs__tab--selected {
-  background-color: #fff;
-  border-bottom: 2px solid #333;
-}
-
-.custom-tab.react-tabs__tab--disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.react-tabs__tab--selected {
+  background-color: #ffffff;
+  border-color: #ccc;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  color: #051a3b; /* Selected tab text color */
 }

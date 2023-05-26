@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .header-title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #051a3b;
+  }
+  
+  
