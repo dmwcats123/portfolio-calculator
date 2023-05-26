@@ -5,9 +5,9 @@ import PortfolioAllocationChartWithLegend from "./PortfolioAllocationChartWithLe
 import PortfolioValueTable from "./PortfolioValueTable";
 import "../styles/VisualisationTabs.css"; // Import the CSS file for styling
 import PortfolioValueLineChart from "./PortfolioValueLineChart";
-import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
-import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
-import CompanyProfitsBarChart from "./CompanyProfitsBarChart";
+// import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
+// import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
+// import CompanyProfitsBarChart from "./CompanyProfitsBarChart";
 import CumulativeProfitsAreaChart from "./CumulativeProfitsAreaChart";
 import 'react-tabs/style/react-tabs.css';
 
@@ -124,9 +124,9 @@ const VisualisationTabs = (props) => {
         <TabPanel>
           <PortfolioAllocationChartWithLegend userInputData={userInputData} />
         </TabPanel>
-        <TabPanel>
+        {/* <TabPanel>
           <StockPriceCandlestickChart tradingData={tradingData.data} />
-        </TabPanel>
+        </TabPanel> */}
         <TabPanel>
           <PortfolioValueTable
             portfolioValuePerDay={result.portfolioValuePerDay}
@@ -138,7 +138,7 @@ const VisualisationTabs = (props) => {
             portfolioValuePerDay={result.portfolioValuePerDay}
           />
         </TabPanel>
-        <TabPanel>
+        {/* <TabPanel>
           <PortfolioValueStackedBarChart
             portfolioValuePerDay={result.portfolioValuePerDay}
           />
@@ -147,7 +147,7 @@ const VisualisationTabs = (props) => {
           <CompanyProfitsBarChart
             portfolioValuePerDay={result.portfolioValuePerDay}
           />
-        </TabPanel>
+        </TabPanel> */}
         <TabPanel>
           <CumulativeProfitsAreaChart
             portfolioValuePerDay={result.portfolioValuePerDay}
