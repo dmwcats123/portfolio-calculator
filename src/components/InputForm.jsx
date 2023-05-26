@@ -55,6 +55,12 @@ const InputForm = () => {
     if (remainingAllocation) {
       setInputError("Total allocation needs to add up to 100%");
       return;
+    } else if (!initialBalance) {
+        setInputError("Initial Balance can not be blank");
+        return;
+    } else if (!fromDate) {
+        setInputError("Start Date can not be blank")
+        return;
     }
     let symbolsString = Object.keys(stockAllocations).toString();
     let allocationValues = Object.values(stockAllocations);
