@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/PortfolioValueTable.css"; 
+import "../styles/PortfolioValueTable.css";
 
 const PortfolioValueTable = (props) => {
   const { portfolioValuePerDay, initialBalance } = props;
@@ -26,23 +26,24 @@ const PortfolioValueTable = (props) => {
 
   return (
     <div className="portfolio-value-table-container">
-      <h2 className="portfolio-value-table-title">Portfolio Value</h2>
+      <h2 className="portfolio-value-table-title">Portfolio Value </h2>
+      <h3 className="portfolio-value-table-sub-title"><i>(Initial Balance {initialBalance} USD)</i></h3>
       <table className="portfolio-value-table">
         <thead>
           <tr>
             <th>Date</th>
             {Object.keys(portfolioValuePerDay[0].stocks).map((stock) => (
               <React.Fragment key={stock}>
-                <th>{stock} Value</th>
-                <th>{stock} Profit</th>
+                <th>{stock} Value (USD)</th>
+                <th>{stock} Profit (USD)</th>
               </React.Fragment>
             ))}
-            <th>Total</th>
+            <th>Total Portfolio Worth (USD)</th>
           </tr>
         </thead>
         <tbody>
-          {portfolioValuePerDay.map((item) => (
-            <tr key={item.date}>
+          {portfolioValuePerDay.map((item, index) => (
+            <tr key={item.date} className={index === 0 ? "highlighted-row" : ""}>
               <td>{item.date}</td>
               {Object.keys(item.stocks).map((stock) => (
                 <React.Fragment key={stock}>

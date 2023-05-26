@@ -34,7 +34,7 @@ const generateColors = (count) => {
   return randomColor({
     count: count,
     luminosity: 'bright',
-    format: 'rgba',
+    format: 'rgb',
   });
 };
 

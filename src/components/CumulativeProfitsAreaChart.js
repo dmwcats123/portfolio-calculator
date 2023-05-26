@@ -10,8 +10,8 @@ const CumulativeProfitsAreaChart = ({ portfolioValuePerDay }) => {
 
   const colors = randomColor({
     count: Object.keys(data[0]).filter((key) => key !== 'date').length,
-    luminosity: 'bright',
-    format: 'rgba',
+    luminosity: 'bright', // Use 'dark' for darker colors
+    format: 'rgb',
   });
 
   return (

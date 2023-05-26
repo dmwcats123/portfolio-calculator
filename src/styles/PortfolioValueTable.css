@@ -1,6 +1,9 @@
 .portfolio-value-table-container {
     margin-top: 20px;
   }
+  .highlighted-row {
+    background-color: yellow;
+  }
   
   .portfolio-value-table {
     width: 100%;
@@ -35,6 +38,13 @@
   }
   .portfolio-value-table-title {
     font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .portfolio-value-table-sub-title {
+    font-size: 15px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;

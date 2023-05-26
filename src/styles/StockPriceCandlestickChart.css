@@ -19,6 +19,10 @@
   .note-description {
     font-style: italic;
   }
+  .note-message {
+    font-size: 12px;
+    text-align: left;
+  }
   
   .note-title {
     font-weight: bold;
