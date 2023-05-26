@@ -224,7 +224,7 @@ const InputForm = () => {
                 </label>
                 <label className = "w-1/2">
                     <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd" minDate = {oneYearAgo} maxDate = {yesterday} placeholderText = "End Date (Optional)" selected = {toDate} onChange={handleToDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
-                <p classname='text-xs'>Note: if no end date is chosen the default is today.</p>
+                <p className='text-xs'>Note: if no end date is chosen the default is today.</p>
                 </label>
                 <div className ="flex justify-end w-1/2"><button className = "block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-auto" type = "submit">Submit</button></div>
                 {inputError && (
