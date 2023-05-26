@@ -107,7 +107,7 @@ const VisualisationTabs = (props) => {
   };
 
   return (
-    <div>
+    <div className="pb-44">
       <Tabs selectedIndex={activeTab} onSelect={(index) => setActiveTab(index)}>
         <TabList className="custom-tab-list">
           <Tab className="custom-tab">Portfolio Allocation</Tab>
@@ -120,7 +120,7 @@ const VisualisationTabs = (props) => {
           <Tab className="custom-tab">Company Profits and Losses per day</Tab>
           <Tab className="custom-tab">Cumulative Profits and Losses</Tab>
         </TabList>
-  
+
         <TabPanel>
           <PortfolioAllocationChartWithLegend userInputData={userInputData} />
         </TabPanel>
