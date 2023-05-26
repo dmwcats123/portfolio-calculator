@@ -207,7 +207,7 @@ export default async function Home() {
   return (
     <main>
       <h1 className="flex justify-center mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r text-customColor">Portfolio Calculator</span>
+        <span className=" text-customColor">Portfolio Calculator</span>
       </h1>
 
       <InputForm />
