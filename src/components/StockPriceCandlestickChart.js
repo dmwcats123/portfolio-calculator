@@ -45,7 +45,10 @@ const StockPriceCandlestickChart = ({ tradingData }) => {
 
   return (
     <div>
-    <h2 className="chart-title">Stock Price Candlestick Chart</h2>
+      <h2 className="chart-title">Stock Price Candlestick Chart</h2>
+        <div className="note-message">
+        Enhance your view by clicking on the legends. They function as buttons to deselect the candlestick display.
+        </div>
       <ReactApexChart options={options} series={options.series} type="candlestick" height={350} />
       <div className="note">
         <div className="note-title">Note:</div>
