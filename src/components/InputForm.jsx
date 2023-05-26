@@ -9,6 +9,8 @@ const InputForm = () => {
     const today = new Date();
     let yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
+    let oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() -1);
     const [stockAllocations, setStockAllocations] = useState({});
     const [currSymbol, setCurrSymbol] = useState("");
     const [symbols, setSymbols] = useState([]);
@@ -28,15 +30,15 @@ const InputForm = () => {
 
         const handleKeyDown = (event) => {
             if (event.key === 'Escape') {
-              setFilteredSymbols([]);
+                setFilteredSymbols([]);
             }
-          };
+        };
 
-          document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keydown', handleKeyDown);
 
-          return () => {
+        return () => {
             document.removeEventListener('keydown', handleKeyDown);
-          };
+        };
     }, []);
 
     const fetchSymbols = async () => {
@@ -218,10 +220,11 @@ const InputForm = () => {
                 <input className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" placeholder = "Initial Balance" type = "text" name = "initial balance" value = {initialBalance ? initialBalance : ""} onChange={handleBalanceChange}/>
                 </label>
                 <label className = "w-1/2">
-                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd"  minDate = {new Date("2022/05/26")} maxDate = {yesterday} placeholderText = "Start Date" selected = {fromDate} onChange={handleFromDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
+                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd"  minDate = {oneYearAgo} maxDate = {yesterday} placeholderText = "Start Date" selected = {fromDate} onChange={handleFromDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
                 </label>
                 <label className = "w-1/2">
-                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd" minDate = {new Date("2022/05/26")} maxDate = {yesterday} placeholderText = "End Date (Optional)" selected = {toDate} onChange={handleToDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
+                    <Datepicker className ="block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-full" dateFormat="yyyy-MM-dd" minDate = {oneYearAgo} maxDate = {yesterday} placeholderText = "End Date (Optional)" selected = {toDate} onChange={handleToDateChange} onKeyDown={(e) => {e.preventDefault();}}/>
+                <p classname='text-xs'>Note: if no end date is chosen the default is today.</p>
                 </label>
                 <div className ="flex justify-end w-1/2"><button className = "block bg-offWhite border-grey rounded border-2 text-gray-700 text-sm font-bold mb-2 w-auto" type = "submit">Submit</button></div>
                 {inputError && (
