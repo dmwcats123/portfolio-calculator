@@ -206,7 +206,7 @@ const userInputData = {
 export default async function Home() {
   return (
     <main>
-      <h1 className="flex justify-center mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+      <h1 className="flex justify-center m-10 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
         <span className=" text-customColor">Portfolio Calculator</span>
       </h1>
 
