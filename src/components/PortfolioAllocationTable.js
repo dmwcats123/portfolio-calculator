@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import "../styles/PortfolioValueTable.css"; 
+import "../styles/PortfolioValueTable.css";
 
 const PortfolioAllocationTable = (props) => {
   const { portfolioAllocation } = props;

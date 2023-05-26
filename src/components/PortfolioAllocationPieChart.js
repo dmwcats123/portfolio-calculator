@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
@@ -34,7 +35,7 @@ const generateColors = (count) => {
   return randomColor({
     count: count,
     luminosity: 'bright',
-    format: 'rgba',
+    format: 'rgb',
   });
 };
 

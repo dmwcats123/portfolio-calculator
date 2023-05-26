@@ -1,6 +1,9 @@
+"use client";
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
-import "../styles/PortfolioValueStackedBarChart.css"; 
+import "../styles/PortfolioValueStackedBarChart.css";
+import dynamic from "next/dynamic";
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const PortfolioValueStackedBarChart = ({ portfolioValuePerDay }) => {
   // Prepare data for the StackedBarChart
@@ -33,6 +36,9 @@ const PortfolioValueStackedBarChart = ({ portfolioValuePerDay }) => {
     });
   });
 
+  // Calculate the height of the chart based on the number of dates
+  const chartHeight = chartData.categories.length * 30;
+
   // Configure the options for the StackedBarChart
   const options = {
     chart: {
@@ -53,8 +59,8 @@ const PortfolioValueStackedBarChart = ({ portfolioValuePerDay }) => {
 
   return (
     <div>
-    <h2 className="chart-title">Portfolio Value per Day Stacked Bar Chart</h2>
-      <ReactApexChart options={options} series={chartData.series} type="bar" height={350} />
+      <h2 className="chart-title">Portfolio Value per Day Stacked Bar Chart</h2>
+      <ApexCharts options={options} series={chartData.series} type="bar" height={chartHeight} />
     </div>
   );
 };

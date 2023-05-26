@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import PortfolioAllocationChartWithLegend from "./PortfolioAllocationChartWithLegend";
 import PortfolioValueTable from "./PortfolioValueTable";
-import "../styles/VisualisationTabs.css"; // Import the CSS file for styling
+import "../styles/VisualisationTabs.css";
 import PortfolioValueLineChart from "./PortfolioValueLineChart";
 // import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
 // import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
 // import CompanyProfitsBarChart from "./CompanyProfitsBarChart";
 import CumulativeProfitsAreaChart from "./CumulativeProfitsAreaChart";
-import 'react-tabs/style/react-tabs.css';
+import "react-tabs/style/react-tabs.css";
 
 const VisualisationTabs = (props) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -110,23 +110,18 @@ const VisualisationTabs = (props) => {
     <div className="pb-44">
       <Tabs selectedIndex={activeTab} onSelect={(index) => setActiveTab(index)}>
         <TabList className="custom-tab-list">
-          <Tab className="custom-tab">Portfolio Allocation</Tab>
-          {/* <Tab className="custom-tab">Stock Price Candlestick Chart</Tab> */}
-          <Tab className="custom-tab">Portfolio Value</Tab>
-          <Tab className="custom-tab">Portfolio Value Line Chart</Tab>
-          {/* <Tab className="custom-tab">
-            Portfolio Value per Day Stacked Bar Chart
-          </Tab>
-          <Tab className="custom-tab">Company Profits and Losses per day</Tab> */}
+          <Tab className="custom-tab">Initial Portfolio Allocation</Tab>
+          <Tab className="custom-tab">Daily Portfolio Value Table</Tab>
+          <Tab className="custom-tab">Daily Portfolio Value Line Chart</Tab>
+          {/* <Tab className="custom-tab">Daily Portfolio Value Stacked Bar Chart</Tab> */}
+          {/* <Tab className="custom-tab">Stock Price Candlestick Chart</Tab>
+          <Tab className="custom-tab">Daily Profits and Losses of Company</Tab> */}
           <Tab className="custom-tab">Cumulative Profits and Losses</Tab>
         </TabList>
 
         <TabPanel>
           <PortfolioAllocationChartWithLegend userInputData={userInputData} />
         </TabPanel>
-        {/* <TabPanel>
-          <StockPriceCandlestickChart tradingData={tradingData.data} />
-        </TabPanel> */}
         <TabPanel>
           <PortfolioValueTable
             portfolioValuePerDay={result.portfolioValuePerDay}
@@ -142,6 +137,9 @@ const VisualisationTabs = (props) => {
           <PortfolioValueStackedBarChart
             portfolioValuePerDay={result.portfolioValuePerDay}
           />
+        </TabPanel> */}
+        {/* <TabPanel>
+          <StockPriceCandlestickChart tradingData={tradingData.data} />
         </TabPanel>
         <TabPanel>
           <CompanyProfitsBarChart

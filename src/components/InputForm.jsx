@@ -55,10 +55,12 @@ const InputForm = () => {
     if (remainingAllocation) {
       setInputError("Total allocation needs to add up to 100%");
       return;
-    } else if (!initialBalance) {
+    }
+    if (!initialBalance) {
         setInputError("Initial Balance can not be blank");
         return;
-    } else if (!fromDate) {
+    }
+    if (!fromDate) {
         setInputError("Start Date can not be blank")
         return;
     }
@@ -120,8 +122,19 @@ const InputForm = () => {
   };
 
   const handleBalanceChange = (event) => {
-    verifyIntegerInput(event);
+    verifyDecimalInput(event); // Use the updated verification function
     setInitialBalance(parseFloat(event.target.value));
+  };
+
+  const verifyDecimalInput = (event) => {
+    const validInput = /^\d+(\.\d{0,2})?$/.test(event.target.value);
+    if (!validInput) {
+      setInputError(
+        `Invalid input for ${event.target.name}. Only numbers and decimals up to two points are allowed.`
+      );
+      return;
+    }
+    setInputError("");
   };
 
   const handleFromDateChange = (date) => {
@@ -255,7 +268,7 @@ const InputForm = () => {
               </button>
             </div>
             <div className="input-field">
-              <label>Initial Balance:</label>
+              <label>Initial Balance (USD):</label>
               <input
                 type="text"
                 name="initial balance"
@@ -295,7 +308,7 @@ const InputForm = () => {
                 }}
               />
               <p className="input-form-note">
-                Note: if no end date is chosen the default is today.
+                Note: If no end date is selected, the default value is set to yesterday. Please note that the data for today may not be available.
               </p>
             </div>
             <div className="input-field">
