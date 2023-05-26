@@ -1,5 +1,5 @@
 
-# Gift Generator AI
+# Portfolio Calculator
 
 A portfolio calculator for stocks. [Deployed Here](https://portfolio-calculator-v2.vercel.app/)
 
