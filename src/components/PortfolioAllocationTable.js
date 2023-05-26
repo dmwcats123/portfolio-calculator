@@ -3,7 +3,15 @@ import React from "react";
 import "../styles/PortfolioValueTable.css";
 
 const PortfolioAllocationTable = (props) => {
-  const { portfolioAllocation } = props;
+  const { initialAllocation, finalAllocation } = props;
+  const calculateTotal = (allocation) => {
+    const firstStock = Object.keys(allocation)[0];
+    const total = allocation[firstStock].total;
+    return total;
+  };
+
+  const initialTotal = calculateTotal(initialAllocation)
+  const finalTotal = calculateTotal(finalAllocation)
 
   return (
     <div className="portfolio-value-table-container">
@@ -12,19 +20,30 @@ const PortfolioAllocationTable = (props) => {
         <thead>
           <tr>
             <th>Stock</th>
-            <th>Allocation</th>
-            <th>Stock Spent</th>
+            <th>Initial Allocation (USD)</th>
+            <th>End Date Allocation (USD) </th>
           </tr>
         </thead>
         <tbody>
-          {Object.keys(portfolioAllocation).map((stock) => (
+          {Object.keys(initialAllocation).map((stock) => (
             <tr key={stock}>
               <td>{stock}</td>
-              <td>{portfolioAllocation[stock].allocation}%</td>
-              <td>${portfolioAllocation[stock].stockSpent}</td>
+              <td>
+                $ {initialAllocation[stock].stockPrice} (
+                {initialAllocation[stock].allocation}%)
+              </td>
+              <td>
+                $ {finalAllocation[stock].stockPrice} (
+                {finalAllocation[stock].allocation}%)
+              </td>
             </tr>
           ))}
         </tbody>
+        <tr>
+          <th>Total (USD)</th>
+          <th>$ {initialTotal}</th>
+          <th>$ {finalTotal} ({(((finalTotal-initialTotal)*100)/initialTotal).toFixed(2)}%)</th>
+        </tr>
       </table>
     </div>
   );

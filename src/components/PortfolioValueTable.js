@@ -54,7 +54,7 @@ const PortfolioValueTable = (props) => {
                   </td>
                 </React.Fragment>
               ))}
-              <td style={{ color: getTotalColor(item.total) }}>{item.total}</td>
+              <td style={{ color: getTotalColor(item.total) }}>{item.total} ({((item.total - initialBalance) / initialBalance * 100).toFixed(2)})%</td>
             </tr>
           ))}
         </tbody>
