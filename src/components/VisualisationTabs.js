@@ -5,9 +5,9 @@ import PortfolioAllocationChartWithLegend from "./PortfolioAllocationChartWithLe
 import PortfolioValueTable from "./PortfolioValueTable";
 import "../styles/VisualisationTabs.css";
 import PortfolioValueLineChart from "./PortfolioValueLineChart";
-import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
-import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
-import CompanyProfitsBarChart from "./CompanyProfitsBarChart";
+// import PortfolioValueStackedBarChart from "./PortfolioValueStackedBarChart";
+// import StockPriceCandlestickChart from "./StockPriceCandlestickChart";
+// import CompanyProfitsBarChart from "./CompanyProfitsBarChart";
 import CumulativeProfitsAreaChart from "./CumulativeProfitsAreaChart";
 import "react-tabs/style/react-tabs.css";
 
@@ -113,9 +113,9 @@ const VisualisationTabs = (props) => {
           <Tab className="custom-tab">Initial Portfolio Allocation</Tab>
           <Tab className="custom-tab">Daily Portfolio Value Table</Tab>
           <Tab className="custom-tab">Daily Portfolio Value Line Chart</Tab>
-          <Tab className="custom-tab">Daily Portfolio Value Stacked Bar Chart</Tab>
-          <Tab className="custom-tab">Stock Price Candlestick Chart</Tab>
-          <Tab className="custom-tab">Daily Profits and Losses of Company</Tab>
+          {/* <Tab className="custom-tab">Daily Portfolio Value Stacked Bar Chart</Tab> */}
+          {/* <Tab className="custom-tab">Stock Price Candlestick Chart</Tab>
+          <Tab className="custom-tab">Daily Profits and Losses of Company</Tab> */}
           <Tab className="custom-tab">Cumulative Profits and Losses</Tab>
         </TabList>
 
@@ -133,19 +133,19 @@ const VisualisationTabs = (props) => {
             portfolioValuePerDay={result.portfolioValuePerDay}
           />
         </TabPanel>
-        <TabPanel>
+        {/* <TabPanel>
           <PortfolioValueStackedBarChart
             portfolioValuePerDay={result.portfolioValuePerDay}
           />
-        </TabPanel>
-        <TabPanel>
+        </TabPanel> */}
+        {/* <TabPanel>
           <StockPriceCandlestickChart tradingData={tradingData.data} />
         </TabPanel>
         <TabPanel>
           <CompanyProfitsBarChart
             portfolioValuePerDay={result.portfolioValuePerDay}
           />
-        </TabPanel>
+        </TabPanel> */}
         <TabPanel>
           <CumulativeProfitsAreaChart
             portfolioValuePerDay={result.portfolioValuePerDay}
