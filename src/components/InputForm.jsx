@@ -268,7 +268,7 @@ const InputForm = () => {
               </button>
             </div>
             <div className="input-field">
-              <label>Initial Balance ($):</label>
+              <label>Initial Balance (USD):</label>
               <input
                 type="text"
                 name="initial balance"
