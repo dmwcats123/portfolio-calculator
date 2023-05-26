@@ -6,15 +6,16 @@ import randomColor from 'randomcolor';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PortfolioAllocationPieChart = ({ portfolioAllocation }) => {
+  console.log(portfolioAllocation)
   const labels = Object.keys(portfolioAllocation);
-  const dataset = labels.map(stock => portfolioAllocation[stock].stockSpent);
+  const dataset = labels.map(stock => portfolioAllocation[stock].stockPrice);
   const colors = generateColors(labels.length);
 
   const data = {
     labels: labels,
     datasets: [
       {
-        label: 'Balance spent ($)',
+        label: 'Balance spent (USD) $',
         data: dataset,
         backgroundColor: colors,
         borderColor: 'black',
@@ -24,7 +25,7 @@ const PortfolioAllocationPieChart = ({ portfolioAllocation }) => {
   };
 
   return (
-    <div style={{ width: '30%', height: 'auto' }}>
+    <div style={{ width: '75%', height: 'auto' }}>
       <Pie data={data} />
     </div>
   );

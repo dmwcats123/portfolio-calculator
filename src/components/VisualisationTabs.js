@@ -110,7 +110,7 @@ const VisualisationTabs = (props) => {
     <div className="pb-44">
       <Tabs selectedIndex={activeTab} onSelect={(index) => setActiveTab(index)}>
         <TabList className="custom-tab-list">
-          <Tab className="custom-tab">Initial Portfolio Allocation</Tab>
+          <Tab className="custom-tab">Portfolio Allocation</Tab>
           <Tab className="custom-tab">Daily Portfolio Value Table</Tab>
           <Tab className="custom-tab">Daily Portfolio Value Line Chart</Tab>
           {/* <Tab className="custom-tab">Daily Portfolio Value Stacked Bar Chart</Tab> */}
@@ -120,7 +120,10 @@ const VisualisationTabs = (props) => {
         </TabList>
 
         <TabPanel>
-          <PortfolioAllocationChartWithLegend userInputData={userInputData} />
+          <PortfolioAllocationChartWithLegend
+            userInputData={userInputData}
+            portfolioValuePerDay={result.portfolioValuePerDay}
+          />
         </TabPanel>
         <TabPanel>
           <PortfolioValueTable
