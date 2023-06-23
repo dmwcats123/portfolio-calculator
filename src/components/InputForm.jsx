@@ -5,6 +5,7 @@ import Datepicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import VisualisationTabs from "./VisualisationTabs";
 import "../styles/InputForm.css";
+import StockInputs from "./StockInputs";
 
 const InputForm = () => {
   const today = new Date();
@@ -12,57 +13,43 @@ const InputForm = () => {
   yesterday.setDate(yesterday.getDate() - 1);
   let oneYearAgo = new Date(today);
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-  const [stockAllocations, setStockAllocations] = useState({});
-  const [currSymbol, setCurrSymbol] = useState("");
-  const [symbols, setSymbols] = useState([]);
-  const [filteredSymbols, setFilteredSymbols] = useState([]);
-  const [currPercentage, setCurrPercentage] = useState(0);
+  const [stocks, setStocks] = useState([""]);
+  const [percentages, setPercentages] = useState([""]);
   const [initialBalance, setInitialBalance] = useState(0);
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const [inputError, setInputError] = useState("");
-  const [symbolSearch, setSymbolSearch] = useState("");
   const [marketStackResponseData, setMarketStackResponseData] =
     useState(undefined);
   const [inputData, setInputData] = useState(undefined);
-  const [remainingAllocation, setRemainingAllocation] = useState(100);
 
   useEffect(() => {
-    fetchSymbols();
-
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setFilteredSymbols([]);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  const fetchSymbols = async () => {
-    fetch("symbols.json")
-      .then((response) => response.json())
-      .then((data) => setSymbols(Object.keys(data)))
-      .catch((error) => console.error("Error:", error));
-  };
+    return () => {};
+  }, [stocks]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const stockAllocations = stocks.reduce((result, stock, index) => {
+      result[stock] = percentages[index] / 100;
+      return result;
+    }, {});
+
+    let remainingAllocation = 100;
+    percentages.map((percentage) => {
+      remainingAllocation -= percentage;
+    });
     if (remainingAllocation) {
       setInputError("Total allocation needs to add up to 100%");
       return;
     }
     if (!initialBalance) {
-        setInputError("Initial Balance can not be blank");
-        return;
+      setInputError("Initial Balance can not be blank");
+      return;
     }
     if (!fromDate) {
-        setInputError("Start Date can not be blank")
-        return;
+      setInputError("Start Date can not be blank");
+      return;
     }
     let symbolsString = Object.keys(stockAllocations).toString();
     let allocationValues = Object.values(stockAllocations);
@@ -110,15 +97,12 @@ const InputForm = () => {
     fetchUserInputJson(date_from, date_to, initialBalance, stockAllocations);
   };
 
-  const handleSymbolChange = (symbol) => {
-    setCurrSymbol(symbol);
-    setSymbolSearch(symbol);
-    setFilteredSymbols([]);
+  const updateStocks = (stocks) => {
+    setStocks(stocks);
   };
 
-  const handlePercentageChange = (event) => {
-    verifyIntegerInput(event);
-    setCurrPercentage(event.target.value);
+  const updatePercentages = (percentages) => {
+    setPercentages(percentages);
   };
 
   const handleBalanceChange = (event) => {
@@ -145,54 +129,6 @@ const InputForm = () => {
     setToDate(date);
   };
 
-  const handleSearchChange = (event) => {
-    setSymbolSearch(event.target.value);
-    setFilteredSymbols(
-      symbols.filter((symbol) =>
-        symbol.toUpperCase().includes(event.target.value.toUpperCase())
-      )
-    );
-  };
-
-  const verifyIntegerInput = (event) => {
-    const validInput = /^[0-9.]*$/.test(event.target.value);
-    if (!validInput) {
-      setInputError(
-        `Invalid input for ${event.target.name}. Only numbers and decimals allowed.`
-      );
-      return;
-    }
-    setInputError("");
-  };
-
-  const addStock = () => {
-    if (!symbols.includes(currSymbol)) {
-      setInputError(
-        "Only symbols which appear in the dropdown menu are valid."
-      );
-      return;
-    }
-    if (currPercentage == "") {
-      setInputError("Percentage can not be blank.");
-      return;
-    }
-
-    const nonStateRemainingAllocation = remainingAllocation - currPercentage;
-    if (nonStateRemainingAllocation < 0) {
-      setInputError("Total Stock Allocation Should Not Exceed 100%.");
-      return;
-    }
-    setRemainingAllocation(nonStateRemainingAllocation);
-
-    setStockAllocations((prevData) => ({
-      ...prevData,
-      [currSymbol]: (parseFloat(currPercentage) / 100).toFixed(2),
-    }));
-    setCurrSymbol("");
-    setCurrPercentage("");
-    setSymbolSearch("");
-  };
-
   const fetchUserInputJson = (
     startDate,
     endDate,
@@ -209,79 +145,44 @@ const InputForm = () => {
   };
 
   const resetState = () => {
-    setStockAllocations({});
-    setCurrSymbol("");
-    setCurrPercentage(0);
+    setStocks([""]);
+    setPercentages([""]);
     setInitialBalance(0);
     setFromDate(null);
     setToDate(null);
     setInputError(null);
-    setSymbolSearch("");
     setInputData(undefined);
     setMarketStackResponseData(undefined);
-    setRemainingAllocation(100);
   };
 
   return (
-    // <div className="input-form-container">
-    <div>
-      <div className="input-form-row">
-        <form className="input-form" onSubmit={handleSubmit}>
+    <div className="bg-gray-100 py-8 px-4">
+      <div className="flex flex-wrap justify-center w-full">
+        <form className="input-form w-3/4" onSubmit={handleSubmit}>
           <div className="input-form-column">
-            <div className="input-field">
-              <label>Search symbols:</label>
-              <input
-                type="text"
-                value={symbolSearch}
-                onChange={handleSearchChange}
-                className="input-field-text"
-                placeholder="Search symbols..."
-              />
-              {filteredSymbols.length > 0 && (
-                <ul className="symbol-list">
-                  {filteredSymbols.map((symbol) => (
-                    <li
-                      className="symbol-list-item"
-                      key={symbol}
-                      onClick={() => handleSymbolChange(symbol)}
-                    >
-                      {symbol}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div className="input-field">
-              <label>Percentage:</label>
-              <input
-                type="text"
-                name="percentage"
-                value={currPercentage ? currPercentage : ""}
-                onChange={handlePercentageChange}
-                className="input-field-text"
-                placeholder="Percentage"
-              />
-            </div>
-            <div className="input-field">
-              <button type="button" onClick={addStock} className="btn-primary">
-                Add Stock To Portfolio
-              </button>
-            </div>
-            <div className="input-field">
-              <label>Initial Balance (USD):</label>
+            <div className="input-field mb-4">
+              <div className="w-full">
+                <label className="input-label text-lg font-medium w-full">
+                  Initial Balance (USD):
+                </label>
+              </div>
               <input
                 type="text"
                 name="initial balance"
                 value={initialBalance ? initialBalance : ""}
                 onChange={handleBalanceChange}
-                className="input-field-text"
+                className="input-field-text bg-white border border-gray-300 rounded-md py-2 px-3 mt-1 w-full"
                 placeholder="Initial Balance"
               />
             </div>
-            <div className="input-field">
-              <label>Start Date:</label>
+            <div className="input-field mb-4">
+              <div className="w-full">
+                <label className="input-label text-lg font-medium w-full">
+                  Start Date:
+                </label>
+              </div>
               <Datepicker
-                className="input-field-datepicker"
+                className="input-field-datepicker bg-white border border-gray-300 rounded-md py-2 px-3 mt-1 w-full"
                 dateFormat="yyyy-MM-dd"
                 minDate={oneYearAgo}
                 maxDate={yesterday}
@@ -293,10 +194,14 @@ const InputForm = () => {
                 }}
               />
             </div>
-            <div className="input-field">
-              <label>End Date (Optional):</label>
+            <div className="input-field mb-4">
+              <div className="w-full">
+                <label className="input-label text-lg font-medium">
+                  End Date (Optional):
+                </label>
+              </div>
               <Datepicker
-                className="input-field-datepicker"
+                className="input-field-datepicker bg-white border border-gray-300 rounded-md py-2 px-3 mt-1 w-full"
                 dateFormat="yyyy-MM-dd"
                 minDate={oneYearAgo}
                 maxDate={yesterday}
@@ -307,41 +212,39 @@ const InputForm = () => {
                   e.preventDefault();
                 }}
               />
-              <p className="input-form-note">
-                Note: If no end date is selected, the default value is set to yesterday. Please note that the data for today may not be available.
+              <p className="input-form-note text-sm text-gray-500 mt-2">
+                Note: If no end date is selected, the default value is the last
+                available market close.
               </p>
             </div>
-            <div className="input-field">
-              <button type="submit" className="btn-primary">
+            <div className="input-field flex justify-between">
+              <button
+                type="submit"
+                className="btn-primary bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md"
+              >
                 Submit
               </button>
-
               <button
                 type="button"
                 onClick={resetState}
-                className="btn-secondary"
+                className="btn-secondary bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-md ml-4"
               >
                 Reset
               </button>
             </div>
-            {inputError && <div className="input-form-error">{inputError}</div>}
+            {inputError && (
+              <div className="input-form-error text-red-500 mt-4">
+                {inputError}
+              </div>
+            )}
           </div>
-          <div className="input-form-column">
-            <div className="current-allocation">
-              <h1 className="input-form-heading">Current Allocation</h1>
-              <h1 className="input-form-subheading">
-                ({remainingAllocation}% remaining):
-              </h1>
-              <ul className="stock-allocations">
-                {Object.entries(stockAllocations).map(
-                  ([symbol, percentage]) => (
-                    <li key={symbol}>
-                      {symbol}: {percentage * 100}%
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
+          <div className="input-form-column p-2">
+            <StockInputs
+              stocks={stocks}
+              percentages={percentages}
+              updateStocks={updateStocks}
+              updatePercentages={updatePercentages}
+            />
           </div>
         </form>
       </div>

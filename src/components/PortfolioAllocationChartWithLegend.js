@@ -6,7 +6,6 @@ import "../styles/PortfolioAllocationChart.css"; // Import the CSS file
 
 const PortfolioAllocationChartWithLegend = (props) => {
   const { userInputData, portfolioValuePerDay } = props;
-  // console.log(portfolioValuePerDay[0].stocks)
   const initialBalance = userInputData.initialBalance; // 32500
   const portfolioAllocation = userInputData.portfolioAllocation; //AAPL: 0.2,   GOOG: 0.5,  MSFT: 0.3
 
@@ -33,7 +32,6 @@ const PortfolioAllocationChartWithLegend = (props) => {
     Object.keys(firstRow.stocks).forEach((stock) => {
       const stockAllocation = stock;
       const stockPrice = firstRow.stocks[stock];
-      console.log("first row", stockAllocation);
 
       calculatedEndDateAllocation[stockAllocation] = {
         allocation: ((stockPrice * 100) / firstRow.total).toFixed(2),

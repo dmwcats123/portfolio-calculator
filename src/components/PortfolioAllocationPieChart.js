@@ -6,7 +6,6 @@ import randomColor from 'randomcolor';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PortfolioAllocationPieChart = ({ portfolioAllocation }) => {
-  console.log(portfolioAllocation)
   const labels = Object.keys(portfolioAllocation);
   const dataset = labels.map(stock => portfolioAllocation[stock].stockPrice);
   const colors = generateColors(labels.length);
