@@ -77,7 +77,7 @@ function StockInputs({ stocks, percentages, updateStocks, updatePercentages }) {
   return (
     <div>
       <div className="input-form-row">
-        <div className="input-form-column">
+        <div className="w-1/2">
           {stocks.map((stock, index) => (
             <input
               key={index}
@@ -107,7 +107,7 @@ function StockInputs({ stocks, percentages, updateStocks, updatePercentages }) {
             </ul>
           )}
         </div>
-        <div className="input-form-column">
+        <div className="w-2/6">
           {percentages.map((percentage, index) => (
             <input
               key={index}
@@ -119,7 +119,7 @@ function StockInputs({ stocks, percentages, updateStocks, updatePercentages }) {
             />
           ))}
         </div>
-        <div className="input-form-column">
+        <div className="w-1/6">
           {percentages.map((percentage, index) => (
             <button
               key={index}

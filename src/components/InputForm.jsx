@@ -238,7 +238,7 @@ const InputForm = () => {
               </div>
             )}
           </div>
-          <div className="input-form-column p-2">
+          <div className="input-form-column py-8 px-0.5">
             <StockInputs
               stocks={stocks}
               percentages={percentages}
